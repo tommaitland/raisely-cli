@@ -5,7 +5,7 @@ import path from 'path';
 import inquirer from 'inquirer';
 import express from 'express';
 import open from 'open';
-import sass from 'node-sass';
+import * as sass from 'sass';
 import { hashElement } from 'folder-hash';
 import * as fzstd from 'fzstd';
 
@@ -103,9 +103,8 @@ export default async function start() {
 			});
 
 			// run through SASS
-			const compiled = sass.renderSync({
-				data: base + styles,
-				outputStyle: 'expanded',
+			const compiled = sass.compileString(base + styles, {
+				style: 'expanded',
 			});
 
 			res.send(compiled.css);
